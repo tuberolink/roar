@@ -17,7 +17,7 @@ var messageY = 0;
 function preload() {
   
 
-  song = loadSound('sound2.mp3');
+
   //least efficient way, but most straightforward way
   let dino1 = loadImage('dino1.png'); // store image in a variable
   let dino2 = loadImage('dino2.png');
@@ -41,11 +41,12 @@ function preload() {
 // ACTUAL SKETCH BELOW
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  song = loadSound('sound2.mp3', loaded);
   textSize(32);
   messageX = width/2
   messageY = height/2
   
-  song.play();
+  
   
   
   //noLoop();
@@ -97,6 +98,10 @@ function draw() {
   
 }
 
+function loaded(){
+  song.play();
+  
+}
 function isMouseInsideText(message, messageX, messageY) {
   const messageWidth = textWidth(message);
   const messageTop = messageY - textAscent();

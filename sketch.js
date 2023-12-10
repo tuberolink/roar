@@ -9,9 +9,15 @@ var speedY= 600;
 var x;
 var y;
 
+var interactionStartedFlag = false;
+
 const message = 'ROARR';
 var messageX = 0;
 var messageY = 0;
+
+const message1 = '--> free ASMR <--';
+var message1X = 0;
+var message1Y = 0;
 
 //LOAD IMAGES BEFORE THE PROGRAM RUNS
 function preload() {
@@ -41,12 +47,15 @@ function preload() {
 // ACTUAL SKETCH BELOW
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  song = loadSound('sound2.mp3', loaded);
+  
+
+  song = loadSound('sound2.mp3');
   textSize(32);
   messageX = width/2
   messageY = height/2
   
-  
+  message1X = 200
+  message1Y = 500
   
   
   //noLoop();
@@ -54,7 +63,13 @@ function setup() {
 
 function draw() {
   
+
+  
     if (isMouseInsideText(message, messageX, messageY)) {
+    cursor(HAND);
+    fill(0, 200, 0);
+    stroke(0, 200, 0);
+  } else if (isMouseInsideText1(message1, message1X, message1Y)) {
     cursor(HAND);
     fill(0, 200, 0);
     stroke(0, 200, 0);
@@ -85,21 +100,19 @@ function draw() {
   //draw to the canvas using the random
   //image(image, x position, y position, image width, image height)
   image(randoImg, width/2, height/2);
+  
   textAlign(CENTER);
   fill(0,0,255)
   text(message, messageX, messageY);
+  
+  text(message1,message1X, message1Y);
 
   
   rectMode(CENTER);
   fill(255,0,0,80)
   //noStroke()
   rect(width/2, height/2,180,70,10)
-  
-  
-}
 
-function loaded(){
-  song.play();
   
 }
 function isMouseInsideText(message, messageX, messageY) {
@@ -111,8 +124,23 @@ function isMouseInsideText(message, messageX, messageY) {
     mouseY > messageTop && mouseY < messageBottom;
 
 }
+function isMouseInsideText1(message1, message1X, message1Y) {
+  const messageWidth1 = textWidth(message1);
+  const messageTop1 = message1Y - textAscent();
+  const messageBottom1 = message1Y + textDescent();
+
+  return mouseX > (message1X-80) && mouseX < (message1X-80) + messageWidth1 &&
+    mouseY > messageTop1 && mouseY < messageBottom1;
+
+}
 function mouseClicked() {
   if (isMouseInsideText(message, messageX, messageY)) {
     window.open('https://drive.google.com/drive/folders/1NIfMMCi-UXnzcBoKvol7gql1rc0PkWBW?usp=sharing/', '_blank');
   }
+  if (isMouseInsideText1(message1, message1X, message1Y)) {
+    if (song.isPlaying() == false){
+        song.play()
+        }
+  }
+
 }
